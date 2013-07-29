@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CollabQA</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<% flash.each do |key, value| %>
+  <div class='flash' id='<%= key %>'>
+  <%= value %>
+  </div>
+<% end %>
+
+<nav>
+<% if user_signed_in? %>
+  Signed in as <%= current_user.email %>
+  <% else %>
+  <%= link_to "Sign up", new_user_registration_path %>
+  <% end %>
+</nav>
+
+<%= link_to "Sign in", new_user_session_path %>
+<%# down to here %>
+
+
+<%= yield %>
+<%# lbelater - make sure this is right> %>
+<%#  added this stuff below (notice & alert), due to pg 164 and devise says in the install%>
+<%# that it will be needed somewhere in application %>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+</body>
+</html>
