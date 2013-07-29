@@ -1,9 +1,13 @@
 CollabQA::Application.routes.draw do
   
-  devise_for :users
+  resources :questions
 
-  # lbelater - need to pu in this line: root :to => "questions#index"
-  
+
+  devise_for :users
+  root :to => "questions#index"
+    
+  resources   :questions
+ 
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

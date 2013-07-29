@@ -26,6 +26,11 @@ group :test do
   gem 'email_spec', '1.2.1'
 end
 
+group :development, :test do
+  gem 'better_errors'
+
+end
+
 gem 'pry-debugger'
 gem 'devise', '2.1.0'
 
