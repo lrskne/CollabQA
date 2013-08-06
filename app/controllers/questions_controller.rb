@@ -23,8 +23,12 @@ class QuestionsController < ApplicationController
 
   # GET /questions/new
   # GET /questions/new.json
+  
+
   def new
+    
     @question = Question.new
+    
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,6 +45,9 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(params[:question])
+    @question.users << current_user
+
+    
 
     respond_to do |format|
       if @question.save
@@ -60,6 +67,11 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
+        #lbelater - not perfect, but at least stops the middle table from being updated
+        if @question.users.includes(:users).where(users: current_user)
+        else
+          @question.users << current_user
+        end
         format.html { redirect_to @question, notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else

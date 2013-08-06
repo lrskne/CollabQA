@@ -5,6 +5,7 @@ class QuestionUserJoin < ActiveRecord::Migration
       t.belongs_to :user
     end
   end
+  add_index :questions_users, [:question_id, :user_id]
 end
 
 
