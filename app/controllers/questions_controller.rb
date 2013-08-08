@@ -64,14 +64,16 @@ class QuestionsController < ApplicationController
   # PUT /questions/1.json
   def update
     @question = Question.find(params[:id])
-
-    respond_to do |format|
-      if @question.update_attributes(params[:question])
-        #lbelater - not perfect, but at least stops the middle table from being updated
-        if @question.users.includes(:users).where(users: current_user)
-        else
+    
+        respond_to do |format|
+      
+        if @question.update_attributes(params[:question])
+        # only update join table if questions_users is not already there
+        # likely a way to have database handle this directly, but for now...
+        unless @question.users.any? { |b| b[:id] == current_user.id }
           @question.users << current_user
         end
+
         format.html { redirect_to @question, notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else

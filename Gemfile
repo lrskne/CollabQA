@@ -26,8 +26,10 @@ group :test do
   gem 'email_spec', '1.2.1'
 end
 
+# sextant is so you can in test go to rake/routes from browser
 group :development, :test do
   gem 'better_errors'
+  gem 'sextant'
 
 end
 
