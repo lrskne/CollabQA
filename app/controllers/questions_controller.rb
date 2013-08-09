@@ -1,6 +1,10 @@
 class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
+
+ before_filter :authenticate_user!, :except => [:index, :show]
+
+
   def index
     @questions = Question.all
 
@@ -70,16 +74,15 @@ class QuestionsController < ApplicationController
         if @question.update_attributes(params[:question])
         # only update join table if questions_users is not already there
         # likely a way to have database handle this directly, but for now...
-        unless @question.users.any? { |b| b[:id] == current_user.id }
-          @question.users << current_user
+          unless @question.users.any? { |b| b[:id] == current_user.id }
+            @question.users << current_user
+          end
+          format.html { redirect_to @question, notice: 'Question was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @question.errors, status: :unprocessable_entity }
         end
-
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
     end
   end
 
