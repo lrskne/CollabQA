@@ -1,5 +1,0 @@
-# Code Fellows Collaborative Questions Assignment
-
-Fill in more details later
-
-Left off here: working on NOT double-entring the middle table when the user has already altered a question once
